@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "pluscraft",
+  "version": "${version}",
+  "name": "PlusCraft",
+  "description": "Open-source multiplayer & social client mod. Free world hosting tools, friends list and more.",
+  "authors": ["LOVE-YT", "NotHeartYT"],
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["com.notheartyt.pluscraft.PlusCraftClient"]
+  },
+  "depends": {
+    "fabricloader": ">=0.18.4",
+    "minecraft": "~1.21.11",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
