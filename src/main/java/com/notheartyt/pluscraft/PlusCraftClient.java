@@ -24,11 +24,18 @@ public class PlusCraftClient implements ClientModInitializer {
         openKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "key.pluscraft.open", InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_H, category));
 
+        // make sure the router mapping never outlives the game
+        Runtime.getRuntime().addShutdownHook(new Thread(Upnp::closeBlocking, "PlusCraft-shutdown"));
+
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (openKey.wasPressed()) {
                 if (client.player != null && client.currentScreen == null) {
                     client.setScreen(new PlusCraftScreen());
                 }
+            }
+            // world closed -> remove the forwarded port
+            if (client.getServer() == null && Upnp.mappedPort > 0 && !Upnp.busy) {
+                Upnp.closeAsync();
             }
         });
     }
